@@ -1,9 +1,6 @@
 /** @jsx React.DOM */
 
 var React = require('react');
-var Showdown = require('showdown');
-var converter = new Showdown.converter();
-var $ = require('jquery');
 
 var myData = {foo: 'bar'};
 

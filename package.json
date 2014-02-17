@@ -11,7 +11,8 @@
   "license": "BSD",
   "dependencies": {
     "express": "~3.4.8",
-    "lodash": "*"
+    "lodash": "*",
+    "react": "*"
   },
   "devDependencies": {
     "gulp": "~3.5.2",
