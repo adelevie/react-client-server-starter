@@ -1,0 +1,25 @@
+{
+  "name": "react-client-server-starter",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon build/server.js"
+  },
+  "repository": "",
+  "author": "",
+  "license": "BSD",
+  "dependencies": {
+    "express": "~3.4.8",
+    "lodash": "*"
+  },
+  "devDependencies": {
+    "gulp": "~3.5.2",
+    "gulp-util": "~2.2.14",
+    "gulp-browserify": "~0.4.4",
+    "reactify": "~0.7.0",
+    "gulp-uglify": "~0.2.1",
+    "gulp-react": "~0.1.2",
+    "nodemon": "~1.0.14"
+  }
+}
