@@ -70,6 +70,9 @@ var BSListGroupItem = React.createClass({
         tag = "a";
       }
     }
+    if (typeof this.props.href !== 'undefined') {
+      tag = "a";
+    }
     var heading = this.props.heading;
     var headingStr = "";
     if (typeof heading !== 'undefined') {
@@ -187,14 +190,17 @@ var BSTopBar = React.createClass({
 
 var NavBar = React.createClass({
   render: function() {
+    var BSListGroupItemNodes = this.props.pages.map(function(page) {
+      return (
+        <BSListGroupItem href={page.route} active={page.active}>
+          {page.name}
+        </BSListGroupItem>);
+    });
     return (
       <BSListGroup>
-        <BSListGroupItem active={false}>Home</BSListGroupItem>
-        <BSListGroupItem active={false}>List Item</BSListGroupItem>
-        <BSListGroupItem active={true}>About</BSListGroupItem>
-        <BSListGroupItem active={false}>Another Item</BSListGroupItem>
+        {BSListGroupItemNodes}
       </BSListGroup>
-    )
+    );
   }
 });
 
@@ -236,7 +242,7 @@ var Layout = React.createClass({
             <BSTopBar title="Example App" />
             <BSRow>
               <BSColumn width="2">
-                <NavBar />
+                <NavBar pages={this.props.navPages} />
               </BSColumn>
               <BSColumn width="6">
                 {this.props.children}

@@ -70,6 +70,9 @@ var BSListGroupItem = React.createClass({displayName: 'BSListGroupItem',
         tag = "a";
       }
     }
+    if (typeof this.props.href !== 'undefined') {
+      tag = "a";
+    }
     var heading = this.props.heading;
     var headingStr = "";
     if (typeof heading !== 'undefined') {
@@ -187,14 +190,17 @@ var BSTopBar = React.createClass({displayName: 'BSTopBar',
 
 var NavBar = React.createClass({displayName: 'NavBar',
   render: function() {
+    var BSListGroupItemNodes = this.props.pages.map(function(page) {
+      return (
+        BSListGroupItem( {href:page.route, active:page.active}, 
+          page.name
+        ));
+    });
     return (
       BSListGroup(null, 
-        BSListGroupItem( {active:false}, "Home"),
-        BSListGroupItem( {active:false}, "List Item"),
-        BSListGroupItem( {active:true}, "About"),
-        BSListGroupItem( {active:false}, "Another Item")
+        BSListGroupItemNodes
       )
-    )
+    );
   }
 });
 
@@ -236,7 +242,7 @@ var Layout = React.createClass({displayName: 'Layout',
             BSTopBar( {title:"Example App"} ),
             BSRow(null, 
               BSColumn( {width:"2"}, 
-                NavBar(null )
+                NavBar( {pages:this.props.navPages} )
               ),
               BSColumn( {width:"6"}, 
                 this.props.children
