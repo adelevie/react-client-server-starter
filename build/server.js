@@ -12,6 +12,9 @@ var _ = require('lodash');
 app.get('/client.js', function(request, response) {
   response.sendfile('build/client.js');
 });
+app.get('/client.js.gz', function(request, response) {
+  response.sendfile('build/client.js');
+});
 
 var Widget = shared.Widget;
 

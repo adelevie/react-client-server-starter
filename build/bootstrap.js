@@ -252,7 +252,7 @@ var Layout = React.createClass({displayName: 'Layout',
               )
             )
           ),
-          React.DOM.script( {src:"/client.js"} )
+          React.DOM.script( {src:"/client.js.gz"} )
         )
       )
     )

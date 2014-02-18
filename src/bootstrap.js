@@ -252,7 +252,7 @@ var Layout = React.createClass({
               </BSColumn>
             </BSRow>
           </BSContainer>
-          <script src="/client.js" />
+          <script src="/client.js.gz" />
         </body>
       </html>
     )
