@@ -4,10 +4,15 @@ var shared = require('./shared.js');
 var React = require('react');
 
 var Widget = shared.Widget;
-var myData = shared.myData;
-var clientOrServer = shared.clientOrServer;
 
 React.renderComponent(
-  <Widget foo={myData.foo} clientOrServer={clientOrServer()} />,
+  <Widget foo="bar" clientOrServer="client" />,
   document.getElementById('client')
 );
+
+var foo = function() {
+  console.log('This function only is executed on the /foo route.');
+}
+var page = require('page');
+page('/foo', foo);
+page();

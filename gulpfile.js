@@ -18,14 +18,14 @@ gulp.task('scripts', function() {
 
 // just jsx
 gulp.task('copy', function() {
-  gulp.src(['src/shared.js', 'src/server.js'])
+  gulp.src(['src/shared.js', 'src/server.js', 'src/bootstrap.js'])
     .pipe(react())
     .pipe(gulp.dest('./build/'));
 });
 
 gulp.task('watch', function () {
   gulp.watch(['src/client.js'], ['scripts']);
-  gulp.watch(['src/shared.js', 'src/server.js'], ['copy']);
+  gulp.watch(['src/shared.js', 'src/server.js', 'src/bootstrap.js'], ['copy']);
 });
 
 gulp.task('default', ['scripts', 'copy', 'watch']);
