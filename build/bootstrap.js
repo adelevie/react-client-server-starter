@@ -16,7 +16,7 @@ var BSHead = React.createClass({displayName: 'BSHead',
     };
     return (
       React.DOM.head(null, 
-        React.DOM.title(null, "Enhance App"),
+        React.DOM.title(null, "Example App"),
         React.DOM.link( {href:myCssCdn, rel:"stylesheet"}),
         this.props.children
       )      

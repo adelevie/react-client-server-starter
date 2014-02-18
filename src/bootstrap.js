@@ -16,7 +16,7 @@ var BSHead = React.createClass({
     };
     return (
       <head>
-        <title>Enhance App</title>
+        <title>Example App</title>
         <link href={myCssCdn} rel="stylesheet"></link>
         {this.props.children}
       </head>      
