@@ -12,8 +12,7 @@
   "dependencies": {
     "express": "~3.4.8",
     "lodash": "*",
-    "react": "*",
-    "page": "*"
+    "react": "*"
   },
   "devDependencies": {
     "gulp": "~3.5.2",
@@ -22,6 +21,8 @@
     "reactify": "~0.7.0",
     "gulp-uglify": "~0.2.1",
     "gulp-react": "~0.1.2",
-    "nodemon": "~1.0.14"
+    "nodemon": "~1.0.14",
+    "gulp-cached": "0.0.1",
+    "gulp-gzip": "0.0.5"
   }
 }

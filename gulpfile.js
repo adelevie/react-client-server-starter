@@ -3,8 +3,10 @@ var gulpUtil = require('gulp-util');
 var browserify = require('gulp-browserify');
 var uglify = require('gulp-uglify');
 var react = require('gulp-react');
+var cache = require('gulp-cached');
+var gzip = require("gulp-gzip");
 
-// browserify + minify + jsx
+// browserify + minify + jsx + gzip + cache
 gulp.task('scripts', function() {
   gulp.src('src/client.js')
     .pipe(browserify({
@@ -13,6 +15,8 @@ gulp.task('scripts', function() {
       transform: ['reactify']
     }))
     .pipe(uglify({outSourceMap: false}))
+    .pipe(gzip())
+    .pipe(cache('clientdotjs'))
     .pipe(gulp.dest('./build/'))
 });
 

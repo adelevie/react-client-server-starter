@@ -48,7 +48,7 @@ var defaultPageHandler = function(request, response) {
   return (
     <div>
       <p>Home!</p>
-      <Widget clientOrServer="server" foo="bar" />
+      <Widget foo="bar" clientOrServer="server" />
       <div id="client" />
     </div>
   );
@@ -58,6 +58,7 @@ var homePageHandler = function(request, response) {
   return (
     <div>
       <p>Home</p>
+      <Widget foo="bar" clientOrServer="server" />
       <div id="client" />
     </div>
   );
@@ -67,6 +68,7 @@ var aboutPageHandler = function(request, response) {
   return (
     <div>
       <p>About</p>
+      <Widget foo="bar" clientOrServer="server" />
       <div id="client" />
     </div>
   );
@@ -75,6 +77,7 @@ var contactPageHandler = function(request, response) {
   return (
     <div>
       <p>Contact</p>
+      <Widget foo="bar" clientOrServer="server" />
       <div id="client" />
     </div>
   );
@@ -84,6 +87,7 @@ var developersPageHandler = function(request, response) {
   return (
     <div>
       <p>Dev Center</p>
+      <Widget foo="bar" clientOrServer="server" />
       <div id="client" />
     </div>
   );

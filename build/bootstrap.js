@@ -206,7 +206,7 @@ var NavBar = React.createClass({displayName: 'NavBar',
 
 var BSButton = React.createClass({displayName: 'BSButton',
   render: function() {
-    return (
+    return this.transferPropsTo(
       React.DOM.button( {type:"submit", className:"btn btn-default"}, 
         this.props.children
       )

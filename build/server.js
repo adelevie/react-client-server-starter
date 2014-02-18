@@ -48,7 +48,7 @@ var defaultPageHandler = function(request, response) {
   return (
     React.DOM.div(null, 
       React.DOM.p(null, "Home!"),
-      Widget( {clientOrServer:"server", foo:"bar"} ),
+      Widget( {foo:"bar", clientOrServer:"server"} ),
       React.DOM.div( {id:"client"} )
     )
   );
@@ -58,6 +58,7 @@ var homePageHandler = function(request, response) {
   return (
     React.DOM.div(null, 
       React.DOM.p(null, "Home"),
+      Widget( {foo:"bar", clientOrServer:"server"} ),
       React.DOM.div( {id:"client"} )
     )
   );
@@ -67,6 +68,7 @@ var aboutPageHandler = function(request, response) {
   return (
     React.DOM.div(null, 
       React.DOM.p(null, "About"),
+      Widget( {foo:"bar", clientOrServer:"server"} ),
       React.DOM.div( {id:"client"} )
     )
   );
@@ -75,6 +77,7 @@ var contactPageHandler = function(request, response) {
   return (
     React.DOM.div(null, 
       React.DOM.p(null, "Contact"),
+      Widget( {foo:"bar", clientOrServer:"server"} ),
       React.DOM.div( {id:"client"} )
     )
   );
@@ -84,6 +87,7 @@ var developersPageHandler = function(request, response) {
   return (
     React.DOM.div(null, 
       React.DOM.p(null, "Dev Center"),
+      Widget( {foo:"bar", clientOrServer:"server"} ),
       React.DOM.div( {id:"client"} )
     )
   );

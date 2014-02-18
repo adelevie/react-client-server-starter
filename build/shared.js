@@ -17,8 +17,6 @@ var getPages = function() {
   return _.cloneDeep(pages);
 }; 
 
-
-
 var pageByName = function(myPages, name) {
   return _.find(myPages, {name: name});
 };

@@ -13,7 +13,7 @@ var defaultPageHandler = function() {
     <Widget foo="bar" clientOrServer="client" />,
     document.getElementById('client')
   );
-}
+};
 
 var pages = shared.getPages();
 var pageByName = shared.pageByName;
