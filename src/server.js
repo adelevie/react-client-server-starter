@@ -1,12 +1,13 @@
 /** @jsx React.DOM */
 
+/* "Framework" */
+
 var express = require('express');
 var app = express();
 app.use(express.logger());
 var React = require('react');
 var shared = require('./shared.js');
 var _ = require('lodash');
-
 
 app.get('/client.js', function(request, response) {
   response.sendfile('build/client.js');
@@ -20,68 +21,87 @@ var render = function(response, component) {
   });
 };
 
+var serveWithNavPagesAndLayout = _.curry(function(navPages, layout, method, route, pageName, callback) {
+  var makeActiveByPageName = function(myPages, pageName) {
+    var pages = shared.getPages();
+    _.each(pages, function(page) {
+      page.active = false;
+    });
+    _.find(pages, {name: pageName}).active = true;
+    return _.cloneDeep(pages);
+  };  
+
+  app[method](route, function(request, response) {
+    var navPagesCopy = makeActiveByPageName(navPages, pageName);
+    var children = callback(request, response);
+    var component = layout({navPages: navPagesCopy}, children);
+    render(response, component);
+  });
+});
+
+/* end "Framework" */
+
+/* app-specific */
 var Layout = shared.bs.Layout;
 
-var pages = [
-  {name: "Home", route: "/"},
-  {name: "About", route: "/about"},
-  {name: "Contact", route: "/contact"},
-  {name: "Dev Center", route: "/developers"}
-];
-
-var makeActiveByPageName = function(myPages, pageName) {
-  var pagesCopy = myPages;
-  _.each(myPages, function(page) {
-    page.active = false;
-  });
-  _.find(pagesCopy, {name: pageName}).active = true;
-  console.log(pageName);
-  console.log(pagesCopy);
-  return pagesCopy;
-}
-
-app.get('/', function(request, response) {
-  var myPages = makeActiveByPageName(pages, "Home");
-  var component = (
-    <Layout navPages={myPages}>
+var defaultPageHandler = function(request, response) {
+  return (
+    <div>
+      <p>Home!</p>
       <Widget clientOrServer="server" foo="bar" />
       <div id="client" />
-    </Layout>
+    </div>
   );
-  render(response, component);
-});
+};
 
-app.get('/about', function(request, response) {
-  var myPages = makeActiveByPageName(pages, "About");
-  var component = (
-    <Layout navPages={myPages}>
-      <Widget clientOrServer="server" foo="bar" />
+var homePageHandler = function(request, response) {
+  return (
+    <div>
+      <p>Home</p>
       <div id="client" />
-    </Layout>
+    </div>
   );
-  render(response, component);
-});
+};
 
-app.get('/contact', function(request, response) {
-  var myPages = makeActiveByPageName(pages, "Contact");
-  var component = (
-    <Layout navPages={myPages}>
-      <Widget clientOrServer="server" foo="bar" />
+var aboutPageHandler = function(request, response) {
+  return (
+    <div>
+      <p>About</p>
       <div id="client" />
-    </Layout>
+    </div>
   );
-  render(response, component);
-});
+};
+var contactPageHandler = function(request, response) {
+  return (
+    <div>
+      <p>Contact</p>
+      <div id="client" />
+    </div>
+  );
+};
 
-app.get('/developers', function(request, response) {
-  var myPages = makeActiveByPageName(pages, "Dev Center");
-  var component = (
-    <Layout navPages={myPages}>
-      <Widget clientOrServer="server" foo="bar" />
+var developersPageHandler = function(request, response) {
+  return (
+    <div>
+      <p>Dev Center</p>
       <div id="client" />
-    </Layout>
+    </div>
   );
-  render(response, component);
+};
+
+var pages = shared.getPages();
+var pageByName = shared.pageByName;
+pageByName(pages, "Home").serverHandler = homePageHandler;
+pageByName(pages, "About").serverHandler = aboutPageHandler;
+pageByName(pages, "Contact").serverHandler = contactPageHandler;
+pageByName(pages, "Dev Center").serverHandler = developersPageHandler;
+
+/* end app-specific */
+
+var serve = serveWithNavPagesAndLayout(pages)(Layout);
+
+_.each(pages, function(page) {
+  serve('get')(page.route)(page.name)(page.serverHandler)
 });
 
 var port = process.env.PORT || 5000;
