@@ -242,20 +242,28 @@ var Layout = React.createClass({displayName: 'Layout',
             BSTopBar( {title:"Example App"} ),
             BSRow(null, 
               BSColumn( {width:"2"}, 
-                NavBar( {pages:this.props.navPages} )
+                " left "
               ),
               BSColumn( {width:"6"}, 
                 this.props.children
               ),
               BSColumn( {width:"4"}, 
-                ExampleForm(null )
+                " right "
               )
             )
           ),
-          React.DOM.script( {src:"/client.js.gz"} )
+          React.DOM.script( {src:"/client.js"} )
         )
       )
     )
+  }
+});
+
+var Widget = React.createClass({displayName: 'Widget',
+  render: function() {
+    return (
+      React.DOM.p(null, "Widget rendered from ", this.props.clientOrServer,". Post Id from params: ", this.props.postId,".")
+    );
   }
 });
 
@@ -275,5 +283,6 @@ module.exports = {
   BSButton: BSButton,
   NavBar: NavBar,
   ExampleForm: ExampleForm,
-  Layout: Layout
+  Layout: Layout,
+  Widget: Widget,
 };

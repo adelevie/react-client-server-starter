@@ -15,8 +15,6 @@ gulp.task('scripts', function() {
       transform: ['reactify']
     }))
     .pipe(uglify({outSourceMap: false}))
-    .pipe(gzip())
-    .pipe(cache('clientdotjs'))
     .pipe(gulp.dest('./build/'))
 });
 
@@ -28,8 +26,8 @@ gulp.task('copy', function() {
 });
 
 gulp.task('watch', function () {
-  gulp.watch(['src/client.js'], ['scripts']);
-  gulp.watch(['src/shared.js', 'src/server.js', 'src/bootstrap.js'], ['copy']);
+  gulp.watch(['src/client.js', 'src/shared.js', 'src/server.js', 'src/bootstrap.js'], ['scripts']);
+  gulp.watch(['src/client.js', 'src/shared.js', 'src/server.js', 'src/bootstrap.js'], ['copy']);
 });
 
 gulp.task('default', ['scripts', 'copy', 'watch']);

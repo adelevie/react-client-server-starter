@@ -242,20 +242,28 @@ var Layout = React.createClass({
             <BSTopBar title="Example App" />
             <BSRow>
               <BSColumn width="2">
-                <NavBar pages={this.props.navPages} />
+                left
               </BSColumn>
               <BSColumn width="6">
                 {this.props.children}
               </BSColumn>
               <BSColumn width="4">
-                <ExampleForm />
+                right
               </BSColumn>
             </BSRow>
           </BSContainer>
-          <script src="/client.js.gz" />
+          <script src="/client.js" />
         </body>
       </html>
     )
+  }
+});
+
+var Widget = React.createClass({
+  render: function() {
+    return (
+      <p>Widget rendered from {this.props.clientOrServer}. Post Id from params: {this.props.postId}.</p>
+    );
   }
 });
 
@@ -275,5 +283,6 @@ module.exports = {
   BSButton: BSButton,
   NavBar: NavBar,
   ExampleForm: ExampleForm,
-  Layout: Layout
+  Layout: Layout,
+  Widget: Widget,
 };
