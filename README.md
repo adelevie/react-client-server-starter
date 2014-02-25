@@ -71,56 +71,6 @@ The composability of React componenets also make it easy to factor out large por
 </html>
 ```
 
-### shared routes
-
-In `shared.js`, we simple create an array of `page` objects, with three attributes: `client`, `server`, and `route`.
-`route` is a string, such as '/posts/:id'. `client` and `server` are just callback functions that execute in their respective environments whenever that route is requested.
-
-```javascript
-var getPages = function() {
-  var pages = [
-    {name: "Home", route: "/"},
-    {name: "About", route: "/about"},
-    {name: "Contact", route: "/contact"},
-    {name: "Dev Center", route: "/developers"}
-  ];
-  _.each(pages, function(page) {
-    _.defaults(page, {serverHandler: null, clientHandler: null});
-  });
-  return _.cloneDeep(pages);
-};
-```
-
-Here, routes are matched with the colloquial names of web pages. Each route is mapped to a `clientHandler` (in `client.js`) and a `serverHandler` (in `server.js`). This makes it easy to write page-specific client code without repeating routes declared on the server.
-
-`server.js`:
-```javascript
-var homePageHandler = function(request, response) {
-  return (
-    <div>
-      <p>Home</p>
-      <Widget foo="bar" clientOrServer="server" />
-      <div id="client" />
-    </div>
-  );
-};
-// snip
-pageByName(pages, "Home").serverHandler = homePageHandler;
-```
-
-`client.js`:
-```javascript
-var defaultPageHandler = function() {
-  console.log('Default Javascript goes here.');
-  React.renderComponent(
-    <Widget foo="bar" clientOrServer="client" />,
-    document.getElementById('client')
-  );
-};
-// snip
-pageByName(pages, "Home").clientHandler = defaultPageHandler;
-```
-
 I'm not really concerned with supporting non-GET requests. An API/backend that accepts those requests really should be a separate application and/or service. Or just use Parse.
 
 One great benefit of using React components with a tightly-coupled routes-to-handlers mechanism is that setting navbar buttons to "active" can be completely hidden away from day-to-day development. It's common webapp behavior that shouldn't clutter up actual business logic. Here's example `NavBar` code:
