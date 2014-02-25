@@ -13,7 +13,7 @@ You will edit code in the `src` folder:
 
 1. `server.js` - a simple Express server.
 2. `client.js` - code that is served to the client.
-3. `shared.js` - code that is shared between client and server.
+3. `shared.js` - code that is shared between client and server. Most app logic is here.
 4. `bootstrap.js` - Bootstrap broken up into many React components
 
 Take a look at `Widget` in `shared.js`:
@@ -27,8 +27,6 @@ var Widget = React.createClass({
   }
 });
 ```
-
-Now take a look at `server.js` and `client.js` and notice how both of them access `Widget`.
 
 This repo is mainly a proof-of-concept/quasi-starter app.
 
@@ -75,7 +73,8 @@ The composability of React componenets also make it easy to factor out large por
 
 ### shared routes
 
-Look at the `getPages` function in `shared.js`. Or look here:
+In `shared.js`, we simple create an array of `page` objects, with three attributes: `client`, `server`, and `route`.
+`route` is a string, such as '/posts/:id'. `client` and `server` are just callback functions that execute in their respective environments whenever that route is requested.
 
 ```javascript
 var getPages = function() {
@@ -122,44 +121,9 @@ var defaultPageHandler = function() {
 pageByName(pages, "Home").clientHandler = defaultPageHandler;
 ```
 
-### abstracting away Express
-
-In order for the client and server to share routes, I needed to dynamically attach page handlers to routes. This meant lightly wrapping Express' `app.get`:
-
-```javascript
-var render = function(response, component) {
-  React.renderComponentToString(component, function(markup) {
-    response.send(markup);
-  });
-};
-
-var serveWithNavPagesAndLayout = _.curry(function(navPages, layout, method, route, pageName, callback) {
-  var makeActiveByPageName = function(myPages, pageName) {
-    var pages = shared.getPages();
-    _.each(pages, function(page) {
-      page.active = false;
-    });
-    _.find(pages, {name: pageName}).active = true;
-    return _.cloneDeep(pages);
-  };
-
-  app[method](route, function(request, response) {
-    var navPagesCopy = makeActiveByPageName(navPages, pageName);
-    var children = callback(request, response);
-    var component = layout({navPages: navPagesCopy}, children);
-    render(response, component);
-  });
-});
-// snip
-var serve = serveWithNavPagesAndLayout(pages)(Layout); // currying ftw
-_.each(pages, function(page) {
-  serve('get')(page.route)(page.name)(page.serverHandler)
-});
-```
-
 I'm not really concerned with supporting non-GET requests. An API/backend that accepts those requests really should be a separate application and/or service. Or just use Parse.
 
-One great benefit of using React components with a tightly-coupled routes-to-handlers mechanism is that setting navbar buttons to "active" can be completely hidden away from day-to-day development. It's common webapp behavior that shouldn't clutter up actual business logic. Here's the `NavBar` code:
+One great benefit of using React components with a tightly-coupled routes-to-handlers mechanism is that setting navbar buttons to "active" can be completely hidden away from day-to-day development. It's common webapp behavior that shouldn't clutter up actual business logic. Here's example `NavBar` code:
 
 ```javascript
 var NavBar = React.createClass({
