@@ -5,9 +5,8 @@ var bs = require('./bootstrap.js');
 var _ = require('lodash');
 
 var render = function(response, component) {
-  React.renderComponentToString(component, function(markup) {
-    response.send(markup); 
-  });
+  var markup = React.renderComponentToString(component);
+  response.send(markup);
 };
 
 var Layout = bs.Layout;
